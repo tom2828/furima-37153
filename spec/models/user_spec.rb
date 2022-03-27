@@ -1,7 +1,6 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-
   before do
     @user = FactoryBot.build(:user)
   end
@@ -12,7 +11,6 @@ RSpec.describe User, type: :model do
         expect(@user).to be_valid
       end
     end
-  
 
     context '新規登録がうまくいかないとき' do
       it 'ニックネームが空欄だと保存できない' do

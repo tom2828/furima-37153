@@ -1,5 +1,6 @@
 class ItemsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
+  before_action :set_item, only: [:show, :edit, :update]
 
   def index
     @items = Item.includes(:user).order('created_at DESC')
@@ -19,32 +20,23 @@ class ItemsController < ApplicationController
   end
 
   def show
-    @item = Item.find(params[:id]) 
   end
 
   def edit
-    @item = Item.find(params[:id])
-    if @item.user_id == current_user.id
-    else
+    if @item.user_id != current_user.id
       redirect_to root_path
     end
   end
 
   def update
-    @item = Item.find(params[:id])
     @item.update(item_params)
-      if @item.valid?
-        redirect_to item_path(item_params)
-      else
-        # NGであれば、エラー内容とデータを保持したままeditファイルを読み込み、エラーメッセージを表示させる
-        render 'edit'
-      end
+    if @item.valid?
+      redirect_to item_path(item_params)
+    else
+      # エラーメッセージを表示させる
+      render 'edit'
+    end
   end
-
-
-
-
-
 
   private
 
@@ -52,4 +44,9 @@ class ItemsController < ApplicationController
     params.require(:item).permit(:image, :item_name, :description, :category_id, :status_id, :shipping_fee_charge_id,
                                  :prefecture_id, :shipping_day_id, :price).merge(user_id: current_user.id)
   end
+
+  def set_item
+    @item = Item.find(params[:id])
+  end
+
 end

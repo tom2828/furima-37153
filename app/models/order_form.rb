@@ -14,11 +14,11 @@ class OrderForm
     validates :tel, format: { with: /\A[0-9]{11}\z/, message: 'is invalid' }
     # トークンのバリデーション
     validates :token
-    
   end
 
   def save
     order = Order.create(user_id: user_id, item_id: item_id)
-    Address.create(order_id: order.id, post_code: post_code, prefecture_id: prefecture_id, city: city, address: address, building_name: building_name, tel: tel)
+    Address.create(order_id: order.id, post_code: post_code, prefecture_id: prefecture_id, city: city, address: address,
+                   building_name: building_name, tel: tel)
   end
 end

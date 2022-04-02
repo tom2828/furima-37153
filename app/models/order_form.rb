@@ -1,6 +1,6 @@
 class OrderForm
   include ActiveModel::Model
-  attr_accessor :user_id, :item_id, :post_code, :prefecture_id, :city, :address, :building_name, :tel
+  attr_accessor :user_id, :item_id, :post_code, :prefecture_id, :city, :address, :building_name, :tel, :token
 
   with_options presence: true do
     # orderのバリデーション
@@ -12,6 +12,8 @@ class OrderForm
     validates :city
     validates :address
     validates :tel, format: { with: /\A[0-9]{11}\z/, message: 'is invalid' }
+    # トークンのバリデーション
+    validates :token
     
   end
 

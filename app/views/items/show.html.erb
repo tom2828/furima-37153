@@ -8,7 +8,7 @@
     </h2>
     <div class="item-img-content">
       <%= image_tag @item.image,class:"item-box-img" %>
-      <% if @item.orders.present?  %>
+      <% if @item.order.present?  %>
       <div class="sold-out">
         <span>Sold Out!!</span>
       </div>
@@ -25,7 +25,7 @@
 
     <%# ログイン場合わけ %>
     <% if user_signed_in? %>
-      <% unless @item.orders.present? %>
+      <% unless @item.order.present? %>
         <% if current_user.id == @item.user_id %> 
           
             <%= link_to "商品の編集", edit_item_path(@item), method: :get, class: "item-red-btn" %>
@@ -38,7 +38,7 @@
     <% end %>
 
     <div class="item-explain-box">
-      <span><%= "商品説明" %></span>
+      <span><%= @item.description %></span>
     </div>
     <table class="detail-table">
       <tbody>
